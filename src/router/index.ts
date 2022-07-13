@@ -16,7 +16,7 @@ export const RootRouter: RouteRecordRaw = {
 export const HomeRouter: RouteRecordRaw = {
   path: "/system",
   name: "DefaultHome",
-  component: () => import("../views/Home.vue"),
+  component: () => import("/@/views/Home.vue"),
 };
 
 /**

@@ -3,13 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --port 8896 --strictPort",
+    "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview"
-  },
-  "dependencies": {
-    "vue": "^3.2.25",
-    "vue-router": "^4.0.16"
   },
   "devDependencies": {
     "@originjs/vite-plugin-federation": "^1.1.6",
@@ -19,5 +15,10 @@
     "vite": "^2.9.9",
     "vite-plugin-qiankun": "^1.0.14",
     "vue-tsc": "^0.34.7"
+  },
+  "dependencies": {
+    "ant-design-vue": "^3.2.10",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.2"
   }
 }
