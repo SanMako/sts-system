@@ -3,13 +3,11 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "",
-  components: {
-    // File: defineAsyncComponent(() => import("sts-file/File")),
-  },
+  components: {},
   setup() {
     return {};
   },

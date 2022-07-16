@@ -37,8 +37,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         remotes: {
           "sts-file": "http://localhost:36110/assets/stsFile.js",
           "sts-parent": "http://localhost:36100/assets/StsParent.js",
-          shared: ["vue", "vue-router", "ant-design-vue"],
         },
+        shared: ["vue", "vue-router", "ant-design-vue"],
       }),
     ],
     build: {

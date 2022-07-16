@@ -43,8 +43,9 @@ function render(props = {}) {
     ),
     routes,
   });
-
+  // const StsButton = defineAsyncComponent(() => import("sts-parent/StsButton"));
   instance = createApp(App);
+  // instance.use(StsButton);
   instance.use(router);
   instance.mount(container ? container.querySelector("#app") : "#app");
 }
