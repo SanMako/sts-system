@@ -1,5 +1,5 @@
 <template>
-  <a-menu
+  <sts-menu
     :selectedKeys="getSelectedKeys"
     :mode="menuMode"
     :theme="theme"
@@ -20,7 +20,7 @@
         />
       </template>
     </template>
-  </a-menu>
+  </sts-menu>
 </template>
 
 <script lang="ts">
@@ -32,12 +32,14 @@ import StsMenuItem from "./MenuItem/index.vue";
 import { RouteRecordRaw } from "vue-router";
 import { useInstalledMenuStore } from "/@/store/modules/menuStore";
 import { useMenuSetting } from "/@/hooks/useMenuSetting";
+import StsMenu from "sts-parent/StsMenu";
 
 export default defineComponent({
-  name: "StsLayoutMenu",
+  name: "LayoutMenu",
   components: {
     StsSubMenu,
     StsMenuItem,
+    StsMenu,
   },
   props: {
     theme: {

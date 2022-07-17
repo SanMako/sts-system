@@ -1,30 +1,39 @@
 <template>
-  <a-menu-item :key="menu.path">
+  <sts-menu-item :key="menu.path">
     <template v-if="!onlyShowIcon && menu.meta.icon" #icon>
       <svg-icon :name="menu.meta && menu.meta.icon" />
     </template>
     <router-link :to="menu.path">
       <div v-if="onlyShowIcon && menu.meta.icon">
-        <a-tooltip :title="$t(menu.meta.title)" color="blue">
-          <a-button type="text" shape="circle">
+        <sts-tooltip :title="$t(menu.meta.title)" color="blue">
+          <sts-button type="text" shape="circle">
             <template #icon><svg-icon :name="menu.meta.icon" /></template>
-          </a-button>
-        </a-tooltip>
+          </sts-button>
+        </sts-tooltip>
       </div>
       <span v-else>
         {{ menu.meta && $t(menu.meta.title) }}
       </span>
     </router-link>
-  </a-menu-item>
+  </sts-menu-item>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { RouteRecordRaw } from "vue-router";
+import { StsMenuItem } from "sts-parent/StsMenuItem";
+import StsButton from "sts-parent/StsButton";
+import StsTooltip from "sts-parent/StsTooltip";
+import SvgIcon from "sts-parent/SvgIcon";
 
 export default defineComponent({
-  name: "StsMenuItem",
-  components: {},
+  name: "MenuItem",
+  components: {
+    StsMenuItem,
+    StsButton,
+    SvgIcon,
+    StsTooltip,
+  },
   props: {
     menu: {
       type: Object as PropType<RouteRecordRaw>,

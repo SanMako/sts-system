@@ -1,46 +1,22 @@
-import { RouteRecordRaw } from "vue-router";
-import { Layout } from "/@/layout";
+import { App } from "vue";
+import { createMemoryHistory, createRouter, Router } from "vue-router";
+import { setupRouterGuard } from "./guard";
+import { routes } from "./routes";
 
-/**
- * 首页
- */
-export const RootRouter: RouteRecordRaw = {
-  path: "/",
-  name: "Index",
-  redirect: "/index",
-  meta: {
-    title: "首页",
-    hidden: true,
-  },
-};
+let router: Router | null = null;
 
-// export const HomeRouter: RouteRecordRaw = {
-//   path: "/system",
-//   name: "DefaultHome",
-//   component: () => import("/@/views/Home.vue"),
-// };
+// config router
+export function setupRouter(app: App<Element>, basePath: string) {
+  router = createRouter({
+    history: createMemoryHistory(basePath),
+    routes,
+  });
+  app.use(router);
+  setupRouterGuard(router);
+}
 
-const HomeRouter: RouteRecordRaw = {
-  path: "/index",
-  name: "DefaultHome",
-  component: Layout,
-  redirect: "/home",
-  meta: {
-    title: "首页",
-  },
-  children: [
-    {
-      path: "/home",
-      name: "DefaultHome",
-      component: () => import("/@/views/Home.vue"),
-      meta: {
-        title: "首页",
-      },
-    },
-  ],
-};
+export function clearRouter() {
+  router = null;
+}
 
-/**
- * 静态路由
- */
-export const routes: RouteRecordRaw[] = [RootRouter, HomeRouter];
+export default router;

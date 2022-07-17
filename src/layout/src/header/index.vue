@@ -1,8 +1,8 @@
 <template>
   <sts-layout-header class="sts-layout-header">
     <div class="sts-layout-header-left">
-      <!-- <sts-sider-trigger />
-      <layout-breadcrumb :menus="menus" /> -->
+      <sts-sider-trigger />
+      <!-- <layout-breadcrumb :menus="menus" /> -->
     </div>
     <div class="sts-layout-header-right">
       <!-- <locale-switch />
@@ -15,11 +15,13 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { StsLayoutHeader } from "sts-parent/StsLayoutHeader";
+import StsSiderTrigger from "../components/SiderTrigger.vue";
 
 export default defineComponent({
   name: "LayoutHeader",
   components: {
     StsLayoutHeader,
+    StsSiderTrigger,
   },
   props: {},
   setup() {
@@ -30,7 +32,7 @@ export default defineComponent({
 
 <style lang="less">
 .sts-layout-header {
-  background: #fff;
+  background: #fff !important;
   display: flex;
   padding: 0;
   align-items: center;

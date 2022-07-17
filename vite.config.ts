@@ -3,6 +3,7 @@ import vue from "@vitejs/plugin-vue";
 import federation from "@originjs/vite-plugin-federation";
 import qiankun from "vite-plugin-qiankun";
 import { resolve } from "path";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 
 const root = process.cwd();
 
@@ -40,6 +41,12 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         },
         shared: ["vue", "vue-router", "ant-design-vue"],
       }),
+      createSvgIconsPlugin({
+        // 指定需要缓存的图标文件夹
+        iconDirs: [pathResolve("src/assets/svg")],
+        // 指定symbolId格式
+        symbolId: "icon-[dir]-[name]",
+      }),
     ],
     build: {
       target: "esnext",
@@ -58,5 +65,9 @@ const resolveAlias = [
   {
     find: /\/@\//,
     replacement: pathResolve("src") + "/",
+  },
+  {
+    find: "vue-i18n",
+    replacement: "vue-i18n/dist/vue-i18n.cjs.js",
   },
 ];

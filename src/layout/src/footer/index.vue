@@ -5,6 +5,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import StsLayoutFooter from "sts-parent/StsLayoutFooter";
+import { RouteRecordRaw } from "vue-router";
 // import StsLayoutMenu from "../menu/index.vue";
 // import { MenuPosition } from "/@/enums/MenuEnums";
 

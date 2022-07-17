@@ -6,12 +6,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineAsyncComponent, defineComponent } from "vue";
 import { useMenuSetting } from "/@/hooks/useMenuSetting";
 
 export default defineComponent({
   name: "StsSiderTrigger",
-  components: {},
+  components: {
+    SvgIcon: defineAsyncComponent(() => import("sts-parent/SvgIcon")),
+  },
   setup() {
     const { getCollapsed, toggleCollapsed } = useMenuSetting();
 

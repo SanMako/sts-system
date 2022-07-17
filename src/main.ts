@@ -1,15 +1,16 @@
-import { createApp } from "vue";
-import { createRouter, createMemoryHistory } from "vue-router";
-import App from "./App.vue";
-import { routes } from "/@/router";
+import { App, createApp } from "vue";
+import MicroApp from "./App.vue";
+import { clearRouter, setupRouter } from "/@/router";
+import { store } from "/@/store";
+import "virtual:svg-icons-register";
+import i18n from "/@/locales";
 
 import {
   renderWithQiankun,
   qiankunWindow,
 } from "vite-plugin-qiankun/dist/helper";
 
-let router = null;
-let instance = null;
+let instance: App | null = null;
 
 renderWithQiankun({
   mount(props) {
@@ -27,26 +28,25 @@ renderWithQiankun({
     console.log("sts system update props", props);
   },
   unmount(props: any) {
-    console.log("%c ", "color: green;", "sts system app unmount");
-    instance.unmount();
-    instance._container.innerHTML = "";
+    console.log("%c ", "color: green;", "sts system app unmount" + props);
+    instance?.unmount();
+    instance!._container.innerHTML = "";
     instance = null;
-    router = null;
+    clearRouter();
   },
 });
 
-function render(props = {}) {
+function render(props: any) {
   const { container } = props;
-  router = createRouter({
-    history: createMemoryHistory(
-      !qiankunWindow.__POWERED_BY_QIANKUN__ ? "/system" : "/"
-    ),
-    routes,
-  });
-  // const StsButton = defineAsyncComponent(() => import("sts-parent/StsButton"));
-  instance = createApp(App);
-  // instance.use(StsButton);
-  instance.use(router);
+  instance = createApp(MicroApp);
+  setupRouter(
+    instance,
+    !qiankunWindow.__POWERED_BY_QIANKUN__ ? "/system" : "/"
+  );
+  // 全局加载store
+  instance.use(store);
+  // 全局加载 vue-i18n
+  instance.use(i18n);
   instance.mount(container ? container.querySelector("#app") : "#app");
 }
 

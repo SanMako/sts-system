@@ -1,18 +1,18 @@
 <template>
-  <a-sub-menu v-if="!onlyShowChild" :key="menu.path">
+  <sts-sub-menu v-if="!onlyShowChild" :key="menu.path">
     <template #icon>
       <svg-icon :name="menu.meta && menu.meta.icon" />
     </template>
     <template #title>
-      <span>{{ menu.meta && $t(menu.meta.title) }}</span>
+      <span>{{ menu.meta && menu.meta.title }}</span>
     </template>
     <template v-for="item in menu.children" :key="item.path">
       <template v-if="item.meta && !item.meta.hidden">
         <template v-if="!item.children">
-          <sts-menu-item :menu="item" :onlyShowIcon="onlyShowIcon" />
+          <menu-item :menu="item" :onlyShowIcon="onlyShowIcon" />
         </template>
         <template v-else>
-          <sts-sub-menu
+          <sub-menu
             :key="menu.path"
             :menu="item"
             :onlyShowIcon="onlyShowIcon"
@@ -21,12 +21,12 @@
         </template>
       </template>
     </template>
-  </a-sub-menu>
+  </sts-sub-menu>
   <template v-else>
     <template v-for="item in menu.children" :key="item.path">
       <template v-if="item.meta && !item.meta.hidden">
         <template v-if="!item.children">
-          <sts-menu-item :menu="item" :onlyShowIcon="onlyShowIcon" />
+          <menu-item :menu="item" :onlyShowIcon="onlyShowIcon" />
         </template>
       </template>
     </template>
@@ -36,12 +36,16 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { RouteRecordRaw } from "vue-router";
-import StsMenuItem from "../MenuItem/index.vue";
+import MenuItem from "../MenuItem/index.vue";
+import { StsSubMenu } from "sts-parent/StsSubMenu";
+import SvgIcon from "sts-parent/SvgIcon";
 
 export default defineComponent({
-  name: "StsSubMenu",
+  name: "SubMenu",
   components: {
-    StsMenuItem,
+    MenuItem,
+    StsSubMenu,
+    SvgIcon,
   },
   props: {
     menu: {
