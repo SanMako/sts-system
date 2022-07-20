@@ -1,49 +1,51 @@
 <template>
-  <a-page-header style="background-color: #fff">
-    <user-search-form @filter-table-data="filterTableData" />
-    <div style="display: flex">
-      <a-button
-        type="primary"
-        style="margin: 8px"
-        @click="state.addUserModalVisible = true"
-      >
-        <template #icon>
-          <svg-icon name="user-add" style="margin-right: 8px" />
-        </template>
-        {{ $t("user.button.create") }}
-      </a-button>
-      <a-button type="primary" danger style="margin: 8px">
-        {{ $t("common.batch.delete") }}
-      </a-button>
-    </div>
-    <user-table
-      :dataSource="state.dataSource"
-      :loading="state.loading"
-      :pagination="state.pagination"
-      @switch-page="switchPage"
-      @on-delete-user="onDeleteUserByUserId"
-      @show-edit-user-drawer="showEditUserDrawer"
-    />
-  </a-page-header>
-  <add-user-modal
-    v-model:visible="state.addUserModalVisible"
-    @create-user="createUser"
-  />
-  <suspense>
-    <template #default>
-      <edit-user-drawer
-        v-if="state.editUserDrawerVisible"
-        v-model:visible="state.editUserDrawerVisible"
-        :userId="state.userId"
-        @update-user="updateUser"
-      />
-    </template>
-    <template #fallback>
-      <div>
-        <h3>{{ $t("common.loading") }}</h3>
+  <div>
+    <sts-page-header style="background-color: #fff">
+      <user-search-form @filter-table-data="filterTableData" />
+      <div style="display: flex">
+        <sts-button
+          type="primary"
+          style="margin: 8px"
+          @click="state.addUserModalVisible = true"
+        >
+          <template #icon>
+            <svg-icon name="user-add" style="margin-right: 8px" />
+          </template>
+          {{ $t("user.button.create") }}
+        </sts-button>
+        <sts-button type="primary" danger style="margin: 8px">
+          {{ $t("common.batch.delete") }}
+        </sts-button>
       </div>
-    </template>
-  </suspense>
+      <user-table
+        :dataSource="state.dataSource"
+        :loading="state.loading"
+        :pagination="state.pagination"
+        @switch-page="switchPage"
+        @on-delete-user="onDeleteUserByUserId"
+        @show-edit-user-drawer="showEditUserDrawer"
+      />
+    </sts-page-header>
+    <add-user-modal
+      v-model:visible="state.addUserModalVisible"
+      @create-user="createUser"
+    />
+    <suspense>
+      <template #default>
+        <edit-user-drawer
+          v-if="state.editUserDrawerVisible"
+          v-model:visible="state.editUserDrawerVisible"
+          :userId="state.userId"
+          @update-user="updateUser"
+        />
+      </template>
+      <template #fallback>
+        <div>
+          <h3>{{ $t("common.loading") }}</h3>
+        </div>
+      </template>
+    </suspense>
+  </div>
 </template>
 
 <script lang="ts">
@@ -59,16 +61,21 @@ import {
   updateUserByUserId,
 } from "/@/apis/userApi";
 import { UserModel } from "/@/model/UserModel";
-import { DefaultPagination } from "/@/config/CommonConfig";
-import { getPreviewImage } from "/@/service/fileService";
+import { DefaultPagination } from "/@/config/PageConfig";
+import StsPageHeader from "sts-parent/StsPageHeader";
+import SvgIcon from "sts-parent/SvgIcon";
+import StsButton from "sts-parent/StsButton";
 
 export default defineComponent({
   name: "UserMgr",
   components: {
+    StsPageHeader,
     UserSearchForm,
     UserTable,
     AddUserModal,
     EditUserDrawer,
+    SvgIcon,
+    StsButton,
   },
   setup() {
     const state = reactive({
@@ -91,14 +98,14 @@ export default defineComponent({
         .catch();
       state.loading = false;
       if (result) {
-        const { totalCount, dataList } = result[0];
+        const { totalCount, dataList } = result;
         state.dataSource = dataList;
         state.pagination.total = totalCount;
       }
       state.dataSource.forEach(async (user: UserModel) => {
-        await getPreviewImage(user.avatar).then((res) => {
-          user.avatar = res;
-        });
+        // await getPreviewImage(user.avatar).then((res) => {
+        //   user.avatar = res;
+        // });
       });
     };
 

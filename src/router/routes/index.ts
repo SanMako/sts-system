@@ -1,5 +1,5 @@
 import type { RouteRecordRaw } from "vue-router";
-import { HomeRouter } from "./modules/home";
+import HomeRouter from "./modules/home";
 import { Layout } from "/@/layout";
 
 /**

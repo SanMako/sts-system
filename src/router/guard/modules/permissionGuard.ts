@@ -13,7 +13,7 @@ export function createPermissionGuard(router: Router) {
    * to: 即将要进入的目标 用一种标准化的方式
    * from: 当前导航正要离开的路由 用一种标准化的方式
    */
-  router.beforeEach(async (to, from, next) => {
+  router?.beforeEach(async (to, from, next) => {
     /**
      * 白名单放行
      */

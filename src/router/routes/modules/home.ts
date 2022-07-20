@@ -4,13 +4,15 @@ import { Layout } from "/@/layout";
 /**
  * 首页
  */
-export const HomeRouter: RouteRecordRaw = {
+const HomeRouter: RouteRecordRaw = {
   path: "/index",
-  name: "DefaultHome",
+  name: "Home",
   component: Layout,
   redirect: "/home",
   meta: {
-    title: "首页",
+    title: "home.title",
+    icon: "home-2",
+    hideBreadcrumb: true,
   },
   children: [
     {
@@ -18,8 +20,11 @@ export const HomeRouter: RouteRecordRaw = {
       name: "DefaultHome",
       component: () => import("/@/views/Home.vue"),
       meta: {
-        title: "首页",
+        title: "home.title",
+        icon: "home-2",
       },
     },
   ],
 };
+
+export default HomeRouter;

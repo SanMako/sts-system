@@ -1,5 +1,5 @@
 <template>
-  <a-table
+  <sts-table
     :columns="menuTableColumns"
     :data-source="dataSource"
     :row-key="(record) => record.menuId"
@@ -7,45 +7,56 @@
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'menuStatus'">
         <span>
-          <a-tag v-if="record.menuStatus == 1" color="green">
+          <sts-tag v-if="record.menuStatus == 1" color="green">
             {{ $t("common.enabled") }}
-          </a-tag>
-          <a-tag v-else color="red">{{ $t("common.disabled") }}</a-tag>
+          </sts-tag>
+          <sts-tag v-else color="red">{{ $t("common.disabled") }}</sts-tag>
         </span>
       </template>
       <template v-if="column.key === 'action'">
         <span>
-          <a-button
+          <sts-button
             type="link"
             style="padding: 0"
             @click="$emit('showEditMenuDrawer', record.menuId)"
           >
             {{ $t("common.edit") }}
-          </a-button>
-          <a-divider type="vertical" />
-          <a-popconfirm
+          </sts-button>
+          <sts-divider type="vertical" />
+          <sts-popconfirm
             v-if="dataSource.length"
             title="Sure to delete?"
             @confirm="$emit('onDeleteMenu', record.menuId)"
           >
-            <a-button type="link" style="padding: 0">
+            <sts-button type="link" style="padding: 0">
               {{ $t("common.delete") }}
-            </a-button>
-          </a-popconfirm>
+            </sts-button>
+          </sts-popconfirm>
         </span>
       </template>
     </template>
-  </a-table>
+  </sts-table>
 </template>
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import dayjs from "dayjs";
 import { MenuModel } from "/@/model/MenuModel";
+import StsButton from "sts-parent/StsButton";
+import StsDivider from "sts-parent/StsDivider";
+import StsTable from "sts-parent/StsTable";
+import StsPopconfirm from "sts-parent/StsPopconfirm";
+import StsTag from "sts-parent/StsTag";
 
 export default defineComponent({
   name: "MenuTable",
-  components: {},
+  components: {
+    StsTag,
+    StsTable,
+    StsButton,
+    StsDivider,
+    StsPopconfirm,
+  },
   props: {
     dataSource: {
       type: Array as PropType<MenuModel[]>,

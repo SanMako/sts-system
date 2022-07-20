@@ -1,9 +1,9 @@
 <template>
-  <div style="display: inline-flex; margin: 0px 0px 4px 0px">
-    <a-breadcrumb separator="">
-      <a-breadcrumb-item>{{ $t("common.location") }}</a-breadcrumb-item>
-    </a-breadcrumb>
-    <a-breadcrumb :routes="routes" style="padding-left: 10px">
+  <div style="display: inline-flex; margin: 0px 0px -1px 0px">
+    <sts-breadcrumb separator="">
+      <sts-breadcrumb-item>{{ $t("common.location") }}</sts-breadcrumb-item>
+    </sts-breadcrumb>
+    <sts-breadcrumb :routes="routes" style="padding-left: 10px">
       <template #itemRender="{ route, routes: routesMatched }">
         <span v-if="!hasRedirect(routesMatched, route)">
           {{ $t(route.meta.title) }}
@@ -12,15 +12,20 @@
           {{ $t(route.meta.title) }}
         </router-link>
       </template>
-    </a-breadcrumb>
+    </sts-breadcrumb>
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, PropType, ref, watchEffect } from "vue";
 import { RouteLocationMatched, RouteRecordRaw, useRouter } from "vue-router";
+import { StsBreadcrumb } from "sts-parent/StsBreadcrumb";
 
 export default defineComponent({
   name: "LayoutBreadcrumb",
+  components: {
+    StsBreadcrumb,
+    StsBreadcrumbItem: StsBreadcrumb.Item,
+  },
   props: {
     menus: {
       type: Array as PropType<RouteRecordRaw[]>,

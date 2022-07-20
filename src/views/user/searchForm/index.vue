@@ -1,38 +1,50 @@
 <template>
-  <a-form
+  <sts-form
     ref="formRef"
     name="advanced_search"
     :model="formState"
     @finish="$emit('filterTableData', $event)"
   >
-    <a-row :gutter="24" style="margin: 0">
-      <a-col v-for="item in userSearch" :key="item.name" :span="8">
-        <a-form-item :name="item.name" :label="$t(item.label)">
-          <a-input
+    <sts-row :gutter="24" style="margin: 0">
+      <sts-col v-for="item in userSearch" :key="item.name" :span="8">
+        <sts-form-item :name="item.name" :label="$t(item.label)">
+          <sts-input
             v-model:value="formState[item.name]"
             :placeholder="$t(item.placeholder)"
           />
-        </a-form-item>
-      </a-col>
-      <a-col :span="8">
-        <a-button type="primary" html-type="submit">
+        </sts-form-item>
+      </sts-col>
+      <sts-col :span="8">
+        <sts-button type="primary" html-type="submit">
           {{ $t("common.search") }}
-        </a-button>
-        <a-button style="margin: 0 8px" @click="() => formRef.resetFields()">
+        </sts-button>
+        <sts-button style="margin: 0 8px" @click="() => formRef.resetFields()">
           {{ $t("common.reset") }}
-        </a-button>
-      </a-col>
-    </a-row>
-  </a-form>
+        </sts-button>
+      </sts-col>
+    </sts-row>
+  </sts-form>
 </template>
 
 <script lang="ts">
 import { FormInstance } from "ant-design-vue";
 import { defineComponent, reactive, ref } from "vue";
+import StsInput from "sts-parent/StsInput";
+import StsButton from "sts-parent/StsButton";
+import { StsForm } from "sts-parent/StsForm";
+import StsCol from "sts-parent/StsCol";
+import StsRow from "sts-parent/StsRow";
 
 export default defineComponent({
   name: "UserSearchForm",
-  components: {},
+  components: {
+    StsCol,
+    StsRow,
+    StsInput,
+    StsButton,
+    StsForm,
+    StsFormItem: StsForm.Item,
+  },
   props: {},
   emits: ["filterTableData"],
   setup() {

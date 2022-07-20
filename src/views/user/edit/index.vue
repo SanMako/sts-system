@@ -8,22 +8,22 @@
     @close="$emit('update:visible', false)"
   >
     <template #extra>
-      <a-button v-if="!state.editable" type="primary" @click="editUser(true)">
+      <sts-button v-if="!state.editable" type="primary" @click="editUser(true)">
         {{ $t("common.edit") }}
-      </a-button>
+      </sts-button>
       <div v-else>
-        <a-button type="primary" @click="editUser(false)">
+        <sts-button type="primary" @click="editUser(false)">
           {{ $t("common.cancel") }}
-        </a-button>
-        <a-button type="primary" style="margin-left: 8px" @click="saveUser()">
+        </sts-button>
+        <sts-button type="primary" style="margin-left: 8px" @click="saveUser()">
           {{ $t("common.save") }}
-        </a-button>
+        </sts-button>
       </div>
     </template>
     <div style="display: flex">
       <div style="width: 24.5%">
         <a-descriptions-item :span="1">
-          <a-image :src="state.avatarThumbUrl" />
+          <sts-img :src="state.avatarThumbUrl" />
         </a-descriptions-item>
       </div>
       <div style="width: 75.5%">
@@ -93,11 +93,16 @@
 <script lang="ts">
 import { defineComponent, reactive } from "vue";
 import { getUserByUserId } from "/@/apis/userApi";
-import { getPreviewImage } from "/@/service/fileService";
+import StsButton from "sts-parent/StsButton";
+import StsImg from "sts-parent/StsImg";
+// import { getPreviewImage } from "/@/service/fileService";
 
 export default defineComponent({
   name: "EditUserDrawer",
-  components: {},
+  components: {
+    StsImg,
+    StsButton,
+  },
   props: {
     visible: {
       type: Boolean,
@@ -133,9 +138,9 @@ export default defineComponent({
         state.userState.avatar = res[0].avatar;
         state.userState.phone = res[0].phoneNum;
         state.userState.email = res[0].emailAddress;
-        getPreviewImage(state.userState.avatar).then((res) => {
-          state.avatarThumbUrl = res;
-        });
+        // getPreviewImage(state.userState.avatar).then((res) => {
+        //   state.avatarThumbUrl = res;
+        // });
       });
     };
 

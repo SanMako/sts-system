@@ -1,6 +1,6 @@
 import { App, createApp } from "vue";
 import MicroApp from "./App.vue";
-import { clearRouter, setupRouter } from "/@/router";
+import { clearRouter, installRouter } from "/@/router";
 import { store } from "/@/store";
 import "virtual:svg-icons-register";
 import i18n from "/@/locales";
@@ -9,6 +9,7 @@ import {
   renderWithQiankun,
   qiankunWindow,
 } from "vite-plugin-qiankun/dist/helper";
+import { setupRouterGuard } from "/@/router/guard";
 
 let instance: App | null = null;
 
@@ -39,14 +40,18 @@ renderWithQiankun({
 function render(props: any) {
   const { container } = props;
   instance = createApp(MicroApp);
-  setupRouter(
-    instance,
-    !qiankunWindow.__POWERED_BY_QIANKUN__ ? "/system" : "/"
-  );
+
   // 全局加载store
   instance.use(store);
   // 全局加载 vue-i18n
   instance.use(i18n);
+  // 全局加载router
+  const router = installRouter(
+    qiankunWindow.__POWERED_BY_QIANKUN__ ? "/system" : "/"
+  );
+  instance.use(router);
+  // 路由守卫
+  setupRouterGuard(router);
   instance.mount(container ? container.querySelector("#app") : "#app");
 }
 

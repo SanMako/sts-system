@@ -1,5 +1,5 @@
 <template>
-  <a-table
+  <sts-table
     :row-key="(record) => record.userId"
     class="ant-table-striped"
     size="middle"
@@ -15,31 +15,31 @@
   >
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'avatar'">
-        <a-image width="25px" :src="record.avatar" />
+        <sts-img width="25px" :src="record.avatar" />
       </template>
       <template v-if="column.key === 'action'">
         <div class="editable-row-operations">
-          <a-button
+          <sts-button
             type="link"
             style="padding: 0"
             @click="$emit('showEditUserDrawer', record.userId)"
           >
             {{ $t("common.edit") }}
-          </a-button>
-          <a-divider type="vertical" />
-          <a-popconfirm
+          </sts-button>
+          <sts-divider type="vertical" />
+          <sts-popconfirm
             v-if="dataSource.length"
             title="Sure to delete?"
             @confirm="$emit('onDeleteUser', record.userId)"
           >
-            <a-button type="link" style="padding: 0">
+            <sts-button type="link" style="padding: 0">
               {{ $t("common.delete") }}
-            </a-button>
-          </a-popconfirm>
+            </sts-button>
+          </sts-popconfirm>
         </div>
       </template>
     </template>
-  </a-table>
+  </sts-table>
 </template>
 
 <script lang="ts">
@@ -47,10 +47,21 @@ import dayjs from "dayjs";
 import { PaginationProps } from "ant-design-vue";
 import { defineComponent, PropType, ref } from "vue";
 import { UserModel } from "/@/model/UserModel";
+import StsButton from "sts-parent/StsButton";
+import StsImg from "sts-parent/StsImg";
+import StsPopconfirm from "sts-parent/StsPopconfirm";
+import StsDivider from "sts-parent/StsDivider";
+import StsTable from "sts-parent/StsTable";
 
 export default defineComponent({
   name: "UserTable",
-  components: {},
+  components: {
+    StsImg,
+    StsTable,
+    StsButton,
+    StsDivider,
+    StsPopconfirm,
+  },
   props: {
     dataSource: {
       type: Array as PropType<UserModel[]>,

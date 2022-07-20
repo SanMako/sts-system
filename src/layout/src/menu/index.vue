@@ -9,10 +9,10 @@
   >
     <template v-for="item in routes" :key="item.path">
       <template v-if="menuHasOneChildren(item) && !item.meta.hidden">
-        <sts-menu-item :menu="item.children[0]" :onlyShowIcon="onlyShowIcon" />
+        <menu-item :menu="item.children[0]" :onlyShowIcon="onlyShowIcon" />
       </template>
       <template v-else-if="item.children">
-        <sts-sub-menu
+        <sub-menu
           :key="item.path"
           :menu="item"
           :onlyShowIcon="onlyShowIcon"
@@ -27,8 +27,8 @@
 import { defineComponent, PropType } from "vue";
 import { MenuMode } from "/@/enums/MenuEnums";
 import { ThemeType } from "/@/enums/ThemeEnums";
-import StsSubMenu from "./SubMenu/index.vue";
-import StsMenuItem from "./MenuItem/index.vue";
+import SubMenu from "./SubMenu/index.vue";
+import MenuItem from "./MenuItem/index.vue";
 import { RouteRecordRaw } from "vue-router";
 import { useInstalledMenuStore } from "/@/store/modules/menuStore";
 import { useMenuSetting } from "/@/hooks/useMenuSetting";
@@ -37,8 +37,8 @@ import StsMenu from "sts-parent/StsMenu";
 export default defineComponent({
   name: "LayoutMenu",
   components: {
-    StsSubMenu,
-    StsMenuItem,
+    SubMenu,
+    MenuItem,
     StsMenu,
   },
   props: {

@@ -21,7 +21,7 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 import { RouteRecordRaw } from "vue-router";
-import { StsMenuItem } from "sts-parent/StsMenuItem";
+import StsMenu from "sts-parent/StsSubMenu";
 import StsButton from "sts-parent/StsButton";
 import StsTooltip from "sts-parent/StsTooltip";
 import SvgIcon from "sts-parent/SvgIcon";
@@ -29,7 +29,7 @@ import SvgIcon from "sts-parent/SvgIcon";
 export default defineComponent({
   name: "MenuItem",
   components: {
-    StsMenuItem,
+    StsMenuItem: StsMenu.Item,
     StsButton,
     SvgIcon,
     StsTooltip,

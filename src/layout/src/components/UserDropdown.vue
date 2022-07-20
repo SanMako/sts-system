@@ -1,50 +1,42 @@
 <template>
-  <a-dropdown placement="bottom">
+  <sts-dropdown placement="bottom">
     <span class="layout-header-user-dropdown">
-      <img :src="avatar || DefaultAvatar" />
+      <img :src="DefaultAvatar" />
       <span>
-        <span class="layout-header-user-dropdown-name">
-          {{ userInfo.nickName }}
-        </span>
+        <span class="layout-header-user-dropdown-name"> 码客-大白菜 </span>
       </span>
     </span>
     <template #overlay>
-      <a-menu>
-        <a-menu-item key="0">
+      <sts-menu>
+        <sts-menu-item key="0">
           {{ $t("layout.header.dropdown.profile") }}
-        </a-menu-item>
-        <a-menu-divider />
-        <a-menu-item key="3">
+        </sts-menu-item>
+        <sts-menu-divider />
+        <sts-menu-item key="3">
           {{ $t("layout.header.dropdown.logout") }}
-        </a-menu-item>
-      </a-menu>
+        </sts-menu-item>
+      </sts-menu>
     </template>
-  </a-dropdown>
+  </sts-dropdown>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { useInstalledUserStore } from "/@/store/modules/userStore";
 import DefaultAvatar from "/@/assets/images/avatar.jpg";
-import { getPreviewImage } from "/@/service/fileService";
+import { StsDropdown } from "sts-parent/StsDropdown";
+import { StsMenu, StsMenuItem, StsMenuDivider } from "sts-parent/StsMenu";
 
 export default defineComponent({
   name: "UserDropdown",
-  components: {},
+  components: {
+    StsDropdown,
+    StsMenu,
+    StsMenuItem,
+    StsMenuDivider,
+  },
   setup() {
-    const userStore = useInstalledUserStore();
-    const userInfo = userStore.getUserInfo;
-
-    const avatar = ref<string>();
-
-    getPreviewImage(userInfo.avatar).then((res) => {
-      avatar.value = res;
-    });
-
     return {
-      userInfo,
       DefaultAvatar,
-      avatar,
     };
   },
 });

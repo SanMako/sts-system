@@ -1,29 +1,29 @@
 <template>
-  <a-modal
+  <sts-modal
     :visible="visible"
     :title="$t('user.add.title')"
     :confirm-loading="state.confirmLoading"
     @cancel="$emit('update:visible', false)"
   >
     <template #footer>
-      <a-button key="reset" @click="handleReset">
+      <sts-button key="reset" @click="handleReset">
         {{ $t("common.reset") }}
-      </a-button>
-      <a-button key="submit" type="primary" @click="handleOk">
+      </sts-button>
+      <sts-button key="submit" type="primary" @click="handleOk">
         {{ $t("common.save") }}
-      </a-button>
+      </sts-button>
     </template>
-    <a-form
+    <sts-form
       ref="formRef"
       :model="state.formState"
       :label-col="state.labelCol"
       :rules="rules"
       name="form_in_modal"
     >
-      <a-row type="flex" justify="space-around" align="middle">
-        <a-col flex="140px">
-          <a-form-item name="avatar">
-            <a-upload
+      <sts-row type="flex" justify="space-around" align="middle">
+        <sts-col flex="140px">
+          <sts-form-item name="avatar">
+            <sts-upload
               name="files"
               list-type="picture-card"
               class="avatar-uploader"
@@ -33,7 +33,7 @@
               @change="handleChange"
             >
               <div v-if="state.avatarThumbUrl">
-                <a-image
+                <sts-img
                   :src="state.avatarThumbUrl"
                   alt="avatar"
                   width="100%"
@@ -46,21 +46,21 @@
                   {{ $t("user.add.form.upload_avatar") }}
                 </div>
               </div>
-            </a-upload>
-          </a-form-item>
-        </a-col>
-        <a-col :flex="3">
-          <a-form-item
+            </sts-upload>
+          </sts-form-item>
+        </sts-col>
+        <sts-col :flex="3">
+          <sts-form-item
             name="username"
             class="height-50"
             :label="$t('user.add.form.username')"
           >
-            <a-input
+            <sts-input
               v-model:value="state.formState.username"
               :placeholder="$t('user.add.form.username_placeholder')"
             />
-          </a-form-item>
-          <a-form-item
+          </sts-form-item>
+          <sts-form-item
             name="nickName"
             class="height-50"
             :label="$t('user.add.form.nickName')"
@@ -71,27 +71,27 @@
               },
             ]"
           >
-            <a-input
+            <sts-input
               v-model:value="state.formState.nickName"
               :placeholder="$t('user.add.form.nickName_placeholder')"
             />
-          </a-form-item>
-        </a-col>
-      </a-row>
-      <a-form-item name="phoneNum" :label="$t('user.add.form.phone')">
-        <a-input
+          </sts-form-item>
+        </sts-col>
+      </sts-row>
+      <sts-form-item name="phoneNum" :label="$t('user.add.form.phone')">
+        <sts-input
           v-model:value="state.formState.phoneNum"
           :placeholder="$t('user.add.form.phone_placeholder')"
         />
-      </a-form-item>
-      <a-form-item name="emailAddress" :label="$t('user.add.form.email')">
-        <a-input
+      </sts-form-item>
+      <sts-form-item name="emailAddress" :label="$t('user.add.form.email')">
+        <sts-input
           v-model:value="state.formState.emailAddress"
           :placeholder="$t('user.add.form.email_placeholder')"
         />
-      </a-form-item>
-    </a-form>
-  </a-modal>
+      </sts-form-item>
+    </sts-form>
+  </sts-modal>
 </template>
 
 <script lang="ts">
@@ -106,12 +106,32 @@ import {
 } from "/@/utils/TypeUtils";
 import { FileItem } from "/@/model/FileModel";
 import { message } from "ant-design-vue";
-import { getPreviewImage, sliceUpload } from "/@/service/fileService";
+// import { getPreviewImage, sliceUpload } from "/@/service/fileService";
 import i18n from "/@/locales";
+import StsInput from "sts-parent/StsInput";
+import StsButton from "sts-parent/StsButton";
+import { StsForm } from "sts-parent/StsForm";
+import StsCol from "sts-parent/StsCol";
+import StsRow from "sts-parent/StsRow";
+import StsImg from "sts-parent/StsImg";
+import SvgIcon from "sts-parent/SvgIcon";
+import StsModal from "sts-parent/StsModal";
+import StsUpload from "sts-parent/StsUpload";
 
 export default defineComponent({
   name: "AddUserModal",
-  components: {},
+  components: {
+    StsCol,
+    StsRow,
+    StsImg,
+    SvgIcon,
+    StsModal,
+    StsInput,
+    StsUpload,
+    StsButton,
+    StsForm,
+    StsFormItem: StsForm.Item,
+  },
   props: {
     visible: {
       type: Boolean,
@@ -172,9 +192,9 @@ export default defineComponent({
       ).then((res) => {
         return res;
       });
-      await getPreviewImage(state.formState.avatar).then((res) => {
-        state.avatarThumbUrl = res;
-      });
+      // await getPreviewImage(state.formState.avatar).then((res) => {
+      //   state.avatarThumbUrl = res;
+      // });
     };
 
     const handleChange = (file: FileItem) => {
@@ -185,7 +205,7 @@ export default defineComponent({
       state,
       formRef,
       rules,
-      getPreviewImage,
+      // getPreviewImage,
       handleOk,
       handleReset,
       beforeUpload,
