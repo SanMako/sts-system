@@ -1,5 +1,5 @@
 <template>
-  <a-table
+  <sts-table
     :row-key="(record) => record.roleId"
     class="a-table-striped"
     size="middle"
@@ -16,37 +16,37 @@
     <template #bodyCell="{ column, record }">
       <template v-if="column.key === 'roleStatus'">
         <span>
-          <a-tag v-if="record.roleStatus == 1" color="green">
+          <sts-tag v-if="record.roleStatus == 1" color="green">
             {{ $t("common.enabled") }}
-          </a-tag>
-          <a-tag v-else color="red">{{ $t("common.disabled") }}</a-tag>
+          </sts-tag>
+          <sts-tag v-else color="red">{{ $t("common.disabled") }}</sts-tag>
         </span>
       </template>
       <template v-if="column.key === 'action'">
         <div class="editable-row-operations">
           <span>
-            <a-button
+            <sts-button
               type="link"
               style="padding: 0"
               @click="showEditDrawer(record.roleId)"
             >
               {{ $t("common.edit") }}
-            </a-button>
-            <a-divider type="vertical" />
-            <a-popconfirm
+            </sts-button>
+            <sts-divider type="vertical" />
+            <sts-popconfirm
               v-if="dataSource.length"
               title="Sure to delete?"
               @confirm="onDelete(record.roleId)"
             >
-              <a-button type="link" style="padding: 0">
+              <sts-button type="link" style="padding: 0">
                 {{ $t("common.delete") }}
-              </a-button>
-            </a-popconfirm>
+              </sts-button>
+            </sts-popconfirm>
           </span>
         </div>
       </template>
     </template>
-  </a-table>
+  </sts-table>
 </template>
 
 <script lang="ts">
@@ -54,10 +54,21 @@ import { PaginationProps } from "ant-design-vue";
 import dayjs from "dayjs";
 import { defineComponent, PropType, ref } from "vue";
 import { RoleModel } from "/@/model/RoleModel";
+import StsTable from "sts-parent/StsTable";
+import StsButton from "sts-parent/StsButton";
+import StsDivider from "sts-parent/StsDivider";
+import StsPopconfirm from "sts-parent/StsPopconfirm";
+import StsTag from "sts-parent/StsTag";
 
 export default defineComponent({
   name: "RoleTable",
-  components: {},
+  components: {
+    StsTag,
+    StsTable,
+    StsButton,
+    StsDivider,
+    StsPopconfirm,
+  },
   props: {
     dataSource: {
       type: Array as PropType<RoleModel[]>,

@@ -12,10 +12,10 @@
       :column="{ xxl: 3, xl: 2, lg: 2, md: 2, sm: 1, xs: 1 }"
     >
       <template #extra>
-        <a-button v-if="!editable" type="primary" @click="edit()"
-          >编辑</a-button
-        >
-        <a-button v-else type="primary" @click="save()">保存</a-button>
+        <sts-button v-if="!editable" type="primary" @click="edit()">
+          编辑
+        </sts-button>
+        <sts-button v-else type="primary" @click="save()">保存</sts-button>
       </template>
       <a-descriptions-item label="角色名" :span="2">
         <a-typography-paragraph
@@ -44,15 +44,18 @@
           un-checked-children="禁用"
           :un-checked-value="2"
         />
-        <a-tag
+        <sts-tag
           v-else-if="!editable && roleState.roleStatus === 1"
           color="green"
         >
           {{ $t("common.enabled") }}
-        </a-tag>
-        <a-tag v-else-if="!editable && roleState.roleStatus === 2" color="red">
+        </sts-tag>
+        <sts-tag
+          v-else-if="!editable && roleState.roleStatus === 2"
+          color="red"
+        >
           {{ $t("common.disabled") }}
-        </a-tag>
+        </sts-tag>
       </a-descriptions-item>
       <a-descriptions-item label="需要授权">
         <a-switch
@@ -63,18 +66,18 @@
           un-checked-children="否"
           :un-checked-value="2"
         />
-        <a-tag
+        <sts-tag
           v-else-if="!editable && roleState.isNeedAuthorized === 1"
           color="green"
         >
           需要
-        </a-tag>
-        <a-tag
+        </sts-tag>
+        <sts-tag
           v-else-if="!editable && roleState.isNeedAuthorized === 2"
           color="red"
         >
           不需要
-        </a-tag>
+        </sts-tag>
       </a-descriptions-item>
     </a-descriptions>
     <a-divider />
@@ -89,10 +92,14 @@ import { defineComponent, reactive, ref } from "vue";
 import RoleMenuTransfer from "./transfer/index.vue";
 import { RoleModel } from "/@/model/RoleModel";
 import { getRoleByRoleId } from "/@/apis/roleApi";
+import StsButton from "sts-parent/StsButton";
+import StsTag from "sts-parent/StsTag";
 
 export default defineComponent({
   name: "EditRoleDrawer",
   components: {
+    StsTag,
+    StsButton,
     RoleMenuTransfer,
   },
   props: {
